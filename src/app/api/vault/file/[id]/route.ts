@@ -21,14 +21,35 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
   }
   const inline = INLINE.test(doc.type) && new URL(req.url).searchParams.get("dl") !== "1";
   const safeName = encodeURIComponent(doc.name);
+  const headers = {
+    ...noStore,
+    "Content-Type": INLINE.test(doc.type) ? doc.type : "application/octet-stream",
+    "Content-Disposition": `${inline ? "inline" : "attachment"}; filename*=UTF-8''${safeName}`,
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "no-referrer",
+    "Accept-Ranges": "bytes",
+  };
+
+  // Safari only plays <video> when the server answers byte-range requests
+  const range = req.headers.get("range")?.match(/^bytes=(\d*)-(\d*)$/);
+  if (range && (range[1] || range[2])) {
+    const size = data.length;
+    let start = range[1] ? Number(range[1]) : size - Number(range[2]);
+    let end = range[1] && range[2] ? Number(range[2]) : size - 1;
+    start = Math.max(0, start);
+    end = Math.min(end, size - 1);
+    if (start > end || start >= size)
+      return new Response(null, { status: 416, headers: { ...headers, "Content-Range": `bytes */${size}` } });
+    return new Response(new Uint8Array(data.subarray(start, end + 1)), {
+      status: 206,
+      headers: { ...headers, "Content-Range": `bytes ${start}-${end}/${size}`, "Content-Length": String(end - start + 1) },
+    });
+  }
+
   return new Response(new Uint8Array(data), {
     headers: {
-      ...noStore,
-      "Content-Type": INLINE.test(doc.type) ? doc.type : "application/octet-stream",
+      ...headers,
       "Content-Length": String(data.length),
-      "Content-Disposition": `${inline ? "inline" : "attachment"}; filename*=UTF-8''${safeName}`,
-      "X-Content-Type-Options": "nosniff",
-      "Referrer-Policy": "no-referrer",
     },
   });
 }

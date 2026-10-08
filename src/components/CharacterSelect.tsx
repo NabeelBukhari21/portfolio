@@ -367,7 +367,9 @@ export function CharacterSelect() {
   const resolve = (g: Proof): Proof & { locked?: boolean } => {
     if (!g.vault) return g;
     const id = arcDocs.get(g.vault);
-    return id ? { ...g, src: fileUrl(id) } : { ...g, locked: true };
+    if (!id) return { ...g, locked: true };
+    const vid = g.vaultVideo ? arcDocs.get(g.vaultVideo) : undefined;
+    return { ...g, src: fileUrl(id), ...(vid ? { video: fileUrl(vid) } : {}) };
   };
   const shotsOf = (list: Proof[]) => list.map(resolve);
   const viewable = (list: Proof[]) => shotsOf(list).filter((g) => !g.locked);

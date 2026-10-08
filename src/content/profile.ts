@@ -622,7 +622,7 @@ export const sideQuests = [
 
 /** The RPG "Character Select" section. Stats are for fun; achievements and photos are real. */
 /** `vault`: the real photo lives encrypted in the vault (vault-src/arcs/<name>); `src` is only a blurred stand-in */
-export type Proof = Shot & { video?: string; vault?: string };
+export type Proof = Shot & { video?: string; vault?: string; vaultVideo?: string };
 export const character = {
   className: "Cloud Mage / Full-Stack Ronin",
   origin: "Lahore → Islamabad → Toronto",
@@ -649,7 +649,7 @@ export const character = {
       gallery: [
         { src: "/character/old-building.webp", caption: "Aitchison College, in front of the old building" },
         { src: "/character/portrait-arch.webp", caption: "Aitchison College" },
-        { src: "/character/aitchison.webp", caption: "Aitchison College, Lahore" },
+        { src: "/character/locked/aitchison-field.webp", caption: "Aitchison College, Lahore", vault: "aitchison-field.webp" },
         { src: "/character/lj-flag.webp", caption: "Leslie Jones (LJ) House flag and the house trophies" },
         { src: "/character/lj-housemaster.webp", caption: "LJ House leaders with the House Master" },
         { src: "/character/lj-full-house.webp", caption: "The whole of LJ House" },
@@ -657,7 +657,7 @@ export const character = {
         { src: "/character/locked/aitchison-with-dad.webp", caption: "With my dad", vault: "aitchison-with-dad.webp" },
         { src: "/character/locked/aitchison-amphitheatre.webp", caption: "Friends in the amphitheatre", vault: "aitchison-amphitheatre.webp" },
         { src: "/character/uniform.webp", caption: "In uniform on the fields" },
-        { src: "/character/final-day.webp", caption: "Final day of school" },
+        { src: "/character/locked/aitchison-final-day.webp", caption: "Final day of school", vault: "aitchison-final-day.webp" },
         { src: "/character/locked/aitchison-final-day-2.webp", caption: "Final day of school", vault: "aitchison-final-day-2.webp" },
       ] as Proof[],
     },
@@ -665,9 +665,9 @@ export const character = {
       name: "The First Commit Arc",
       years: "2021 – 2023",
       text: "Software intern at Techinoid, two semesters of AI at FAST NUCES, sales intern at GenITeam. Code meets customers.",
-      image: "/character/fc-campus.webp",
+      image: "/character/fc-scratch.webp",
       gallery: [
-        { src: "/character/fc-campus.webp", caption: "Campus days" },
+        { src: "/character/locked/fc-campus.webp", caption: "Campus days", vault: "fc-campus.webp" },
         { src: "/character/fc-scratch.webp", caption: "Lab work in Scratch" },
         { src: "/character/locked/fc-evening.webp", caption: "With friends at an evening event", vault: "fc-evening.webp" },
       ] as Proof[],
@@ -694,7 +694,7 @@ export const character = {
         { src: "/character/locked/to-hack-selfie.webp", caption: "Hackathon grind", vault: "to-hack-selfie.webp" },
         { src: "/character/to-conference.webp", caption: "At a conference" },
         { src: "/character/locked/to-event.webp", caption: "At an event", vault: "to-event.webp" },
-        { src: "/character/to-friends-poster.jpg", caption: "With friends on campus", video: "/character/to-friends.mp4" },
+        { src: "/character/locked/to-friends.webp", caption: "With friends on campus", vault: "to-friends-poster.jpg", vaultVideo: "to-friends.mp4" },
       ] as Proof[],
     },
     {
@@ -704,14 +704,14 @@ export const character = {
       image: "/character/graduation.webp",
       gallery: [
         { src: "/character/graduation.webp", caption: "Graduation — Seneca Polytechnic, Toronto, June 2026" },
-        { src: "/character/b-library.webp", caption: "Toronto Reference Library, July 2026" },
+        { src: "/character/locked/b-library.webp", caption: "Toronto Reference Library, July 2026", vault: "b-library.webp" },
         { src: "/character/locked/builder-bus.webp", caption: "On the bus with the group, July 2026", vault: "builder-bus.webp" },
-        { src: "/character/b-fields-poster.jpg", caption: "Fields from the bus window, July 2026", video: "/character/b-fields.mp4" },
-        { src: "/character/b-site-walk.webp", caption: "Walking the site, July 2026" },
+        { src: "/character/locked/b-fields.webp", caption: "Fields from the bus window, July 2026", vault: "b-fields-poster.jpg", vaultVideo: "b-fields.mp4" },
+        { src: "/character/locked/b-site-walk.webp", caption: "Walking the site, July 2026", vault: "b-site-walk.webp" },
         { src: "/character/b-elevator.webp", caption: "Grain elevator site visit, July 2026" },
         { src: "/character/b-plant-poster.jpg", caption: "Plant tour, July 2026", video: "/character/b-plant.mp4" },
         { src: "/character/b-group.webp", caption: "Group photo at the grain elevators, July 2026" },
-        { src: "/character/b-arcade.webp", caption: "Retro arcade booth, August 2026" },
+        { src: "/character/locked/b-arcade.webp", caption: "Retro arcade booth, August 2026", vault: "b-arcade.webp" },
         { src: "/character/locked/builder-community-event.webp", caption: "Community event, August 2026", vault: "builder-community-event.webp" },
         { src: "/character/locked/builder-night-out.webp", caption: "Night out, August 2026", vault: "builder-night-out.webp" },
       ] as Proof[],
