@@ -433,7 +433,7 @@ export function CharacterSelect() {
   const swipe = useRef(0);
 
   return (
-    <section id="character" ref={sec} className="relative overflow-clip pb-28">
+    <section data-covers-face id="character" ref={sec} className="relative overflow-clip pb-28">
       {/* ======= the world: one pinned 3D backdrop behind every chapter ======= */}
       <div aria-hidden className="pointer-events-none sticky top-0 z-0 -mb-[100vh] h-screen overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_115%,rgba(255,59,92,0.22),transparent_55%),radial-gradient(ellipse_at_15%_0%,rgba(0,240,255,0.08),transparent_45%),linear-gradient(to_bottom,rgba(6,5,12,0.93),rgba(6,5,12,0.86))]" />

@@ -349,6 +349,15 @@ export function ArchitectureMap() {
   }, [tier1, hover, wide]);
 
   const shown = hovered && hovered.id !== selected ? hovered : null;
+  // mount the 3D scene only once the section is within a screen of the viewport
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    const el = sec.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => e.isIntersecting && (setNear(true), io.disconnect()), { rootMargin: "100% 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
     <section id="map" ref={sec} className="relative lg:h-[230svh]">
@@ -394,7 +403,7 @@ export function ArchitectureMap() {
         <div className="relative lg:grid lg:h-full lg:grid-cols-[1.1fr_1fr]">
           {/* 3D stage — full bleed, fades into the page above and below */}
           <div className="relative h-[66svh] [mask-image:linear-gradient(to_bottom,transparent,black_14%,black_84%,transparent)] lg:absolute lg:inset-0 lg:h-full">
-            {webgl ? (
+            {webgl && near ? (
               <SystemScene
                 nodes={nodes}
                 edges={edges}
@@ -406,7 +415,7 @@ export function ArchitectureMap() {
                 shift={wide ? 0.22 : 0}
               />
             ) : (
-              <div className="flex h-full items-center justify-center p-6 text-center font-mono text-xs text-dim">3D view isn&apos;t available on this device.</div>
+              !webgl && <div className="flex h-full items-center justify-center p-6 text-center font-mono text-xs text-dim">3D view isn&apos;t available on this device.</div>
             )}
           </div>
 

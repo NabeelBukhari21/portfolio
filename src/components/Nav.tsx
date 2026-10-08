@@ -24,7 +24,7 @@ function Gyro({ size = 38 }: { size?: number }) {
       <span className="absolute inset-[-5px] rounded-full border border-cyan/60 [animation:gyro-a_6s_linear_infinite] [transform-style:preserve-3d]" />
       <span className="absolute inset-[-3px] rounded-full border border-dashed border-pink/70 [animation:gyro-b_9s_linear_infinite] [transform-style:preserve-3d]" />
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/logo-face.png" alt="" className="relative h-full w-full rounded-full shadow-[0_0_18px_-2px_rgba(0,240,255,0.7)]" />
+      <img src="/logo-face-96.webp" alt="" className="relative h-full w-full rounded-full shadow-[0_0_18px_-2px_rgba(0,240,255,0.7)]" />
     </span>
   );
 }

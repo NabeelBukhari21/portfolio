@@ -769,7 +769,17 @@ export function HoloFace({
 
       const tick = (now: number) => {
         raf = requestAnimationFrame(tick);
+        // every ~half second: is an opaque full-screen section (Character Select, Business, Vault) covering us?
+        if (background && frame % 30 === 0) {
+          let hidden = false;
+          for (const el of document.querySelectorAll<HTMLElement>("[data-covers-face]")) {
+            const r = el.getBoundingClientRect();
+            if (r.top <= 0 && r.bottom >= innerHeight) { hidden = true; break; }
+          }
+          stage.covers.section = hidden;
+        }
         if (background && stage.faceCovered) {
+          frame++;
           // a full-screen scene is on top — fade out and stop drawing
           if (wrapEl && lastOpacity !== 0) { wrapEl.style.opacity = "0"; lastOpacity = 0; }
           t0 = now;
@@ -778,7 +788,7 @@ export function HoloFace({
         if (!visible || document.hidden) { t0 = now; return; }
         // once the hero is behind us the face is a dim backdrop — 30 fps is plenty
         frame++;
-        if (background && sp > 0.6 && focus < 0.05 && !holo.speaking && frame % 2 === 1) return;
+        if (background && sp > 0.6 && focus < 0.05 && !holo.speaking && frame % (small ? 3 : 2) !== 0) return;
         const dt = Math.min(0.05, (now - t0) / 1000);
         t0 = now;
         const time = now / 1000;

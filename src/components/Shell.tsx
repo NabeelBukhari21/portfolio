@@ -78,6 +78,25 @@ export function Shell() {
     };
   }, [recruiter]);
 
+  // Performance: freeze looping CSS animations in sections that are far off-screen
+  useEffect(() => {
+    if (recruiter) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) e.target.removeAttribute("data-offscreen");
+          else e.target.setAttribute("data-offscreen", "");
+        }
+      },
+      { rootMargin: "50% 0px" },
+    );
+    const t = setTimeout(() => document.querySelectorAll("main > section, main > div").forEach((el) => io.observe(el)), 300);
+    return () => {
+      clearTimeout(t);
+      io.disconnect();
+    };
+  }, [recruiter]);
+
   // Keyboard: ` opens terminal, Konami code unlocks side quests
   useEffect(() => {
     let seq: string[] = [];

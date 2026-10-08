@@ -349,15 +349,33 @@ aside.glass {
 @keyframes vault-sheen { 0%, 60% { transform: translateX(0) skewX(-20deg); } 100% { transform: translateX(600%) skewX(-20deg); } }
 
 /* ---------- character select world ---------- */
-.cs-floor {
+.cs-floor, .vt-floor {
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(to top, black 5%, transparent 90%);
+}
+/* the grid lives on a taller child that slides — a transform, so the GPU moves it without repainting */
+.cs-floor::before, .vt-floor::before {
+  content: "";
+  position: absolute;
+  inset: -70px 0 0 0;
   background-image:
     linear-gradient(rgba(255, 59, 92, 0.38) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 240, 255, 0.22) 1px, transparent 1px);
   background-size: 70px 70px;
-  animation: cs-floor 3.5s linear infinite;
-  mask-image: linear-gradient(to top, black 5%, transparent 90%);
+  animation: floor-move 3.5s linear infinite;
+  will-change: transform;
 }
-@keyframes cs-floor { to { background-position: 0 70px; } }
+.vt-floor::before {
+  inset: -80px 0 0 0;
+  background-image:
+    linear-gradient(rgba(242, 255, 60, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 43, 214, 0.18) 1px, transparent 1px);
+  background-size: 80px 80px;
+  animation: floor-move-80 4s linear infinite;
+}
+@keyframes floor-move { to { transform: translateY(70px); } }
+@keyframes floor-move-80 { to { transform: translateY(80px); } }
 @keyframes cs-marquee { to { transform: translateX(-50%); } }
 @keyframes cs-sweep { 0% { top: 0; opacity: 0; } 10%, 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
 .cs-marquee { animation: cs-marquee 60s linear infinite; }
@@ -375,22 +393,14 @@ aside.glass {
 }
 .group:hover .holo-shine { opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
-  .cs-floor, .cs-marquee { animation: none; }
+  .cs-floor::before, .vt-floor::before, .cs-marquee { animation: none; }
 }
 
 /* ---------- hologram voice meter ---------- */
 .holo-bar { height: 20%; animation: holo-bar 0.55s ease-in-out infinite alternate; }
 @keyframes holo-bar { 0% { height: 15%; } 50% { height: 100%; } 100% { height: 35%; } }
-.vt-floor {
-  background-image:
-    linear-gradient(rgba(242, 255, 60, 0.3) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 43, 214, 0.18) 1px, transparent 1px);
-  background-size: 80px 80px;
-  animation: vt-floor 4s linear infinite;
-  mask-image: linear-gradient(to top, black 5%, transparent 90%);
-}
-@media (prefers-reduced-motion: reduce) { .vt-floor { animation: none; } }
-@keyframes vt-floor { to { background-position: 0 80px; } }
+
+
 
 /* ---------- nav gyroscope ---------- */
 @keyframes gyro-a { from { transform: rotateX(70deg) rotateZ(0deg); } to { transform: rotateX(70deg) rotateZ(360deg); } }
@@ -420,3 +430,13 @@ aside.glass {
 .unlock-tear { animation: unlock-tear 0.18s steps(2) 6 both; }
 @keyframes unlock-tear { 0% { transform: translateX(-4%); } 50% { transform: translateX(5%); } 100% { transform: translateX(0); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .fae-wing, .fae-halo, .fae-dust, .unlock-rain { animation: none; } }
+
+
+/* ---------- performance ---------- */
+/* sections scrolled far off-screen freeze their looping CSS animations */
+[data-offscreen] *, [data-offscreen] *::before, [data-offscreen] *::after { animation-play-state: paused !important; }
+/* phones: live background blur over moving 3D is the most expensive thing a mobile GPU can do — use solid glass instead */
+@media (hover: none) and (pointer: coarse) {
+  .glass { backdrop-filter: none; -webkit-backdrop-filter: none; background: linear-gradient(140deg, rgba(26, 21, 52, 0.94), rgba(12, 9, 28, 0.96)); }
+  [class*="backdrop-blur"] { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+}

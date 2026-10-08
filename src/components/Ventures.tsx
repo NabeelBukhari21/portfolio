@@ -205,7 +205,7 @@ export function Ventures() {
   const bX = useTransform(hp, [0, 1], ["8%", "-10%"]);
 
   return (
-    <section id="ventures" ref={sec} className="relative overflow-clip pb-16 pt-24">
+    <section data-covers-face id="ventures" ref={sec} className="relative overflow-clip pb-16 pt-24">
       {/* pinned backdrop: a gold-lit market floor */}
       <div aria-hidden className="pointer-events-none sticky top-0 z-0 -mb-[100vh] h-screen overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_115%,rgba(242,255,60,0.13),transparent_55%),linear-gradient(to_bottom,rgba(6,5,12,0.92),rgba(6,5,12,0.84))]" />

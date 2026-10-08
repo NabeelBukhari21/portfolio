@@ -210,7 +210,7 @@ export function HoloDirector() {
           role="status"
           aria-live="polite"
         >
-          <div className="relative border border-cyan/50 bg-[#07051a]/90 p-3 shadow-[0_0_40px_-10px_rgba(0,240,255,0.7)] backdrop-blur-md" style={{ clipPath: "polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))" }}>
+          <div className="relative border border-cyan/50 bg-[#07051a]/90 p-3 shadow-[0_0_40px_-10px_rgba(0,240,255,0.7)]" style={{ clipPath: "polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))" }}>
             <div className="mb-1.5 flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] text-cyan">
               {dock !== "face" && (
                 // eslint-disable-next-line @next/next/no-img-element

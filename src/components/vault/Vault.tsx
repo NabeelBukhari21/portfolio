@@ -281,7 +281,7 @@ export function Vault() {
   const doorState = phase === "grant" ? "open" : phase === "verify" ? "busy" : err || phase === "deny" ? "deny" : "locked";
 
   return (
-    <section id="vault" ref={sec} className="relative scroll-mt-16 overflow-clip py-24">
+    <section data-covers-face id="vault" ref={sec} className="relative scroll-mt-16 overflow-clip py-24">
       {/* world: floor grid, red horizon, kanji */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,rgba(6,5,12,0.88)_12%,rgba(6,5,12,0.88)_88%,transparent)]" />

@@ -214,7 +214,7 @@ export function Hero() {
           </div>
 
           {/* Neural link module */}
-          <div className="mt-6 max-w-md border border-line bg-panel/80 p-3 font-mono text-[11px] backdrop-blur" style={{ clipPath: "polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%)" }}>
+          <div className="mt-6 max-w-md border border-line bg-panel/80 p-3 font-mono text-[11px]" style={{ clipPath: "polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%)" }}>
             <div className="flex items-center justify-between gap-3">
               <span className="text-dim">
                 NEURAL LINK{" "}

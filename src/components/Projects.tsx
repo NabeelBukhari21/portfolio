@@ -282,6 +282,11 @@ function Reel({
       const el = sec.current;
       if (!el) return;
       const r = el.getBoundingClientRect();
+      // far away from the reel: nothing to update (saves a React render on every scroll elsewhere)
+      if (r.bottom < -innerHeight || r.top > innerHeight * 2) {
+        stage.covers.reel = false;
+        return;
+      }
       const total = r.height - innerHeight;
       const t = Math.max(0, Math.min(1, -r.top / Math.max(1, total)));
       target.current = t * (N - 1);
@@ -378,12 +383,22 @@ function Reel({
   }, []);
   const onReady = useCallback((ok: boolean) => !ok && onUnsupported(), [onUnsupported]);
   const canHover = useSyncExternalStore(noop, () => matchMedia("(hover: hover)").matches, () => true);
+  // don't spin up the 3D reel until it's within a couple of screens
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    const el = sec.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => e.isIntersecting && (setNear(true), io.disconnect()), { rootMargin: "200% 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   const hasShots = shots.length > 0;
   const thumbs = shots.slice(0, 6);
 
   return (
     <section id="projects" ref={sec} className="relative" style={{ height: `calc(${N * PER_CARD_VH}svh + 100svh)` }}>
       <div className="sticky top-0 h-[100svh] overflow-hidden">
+        {near && (
         <ProjectStage
           items={items}
           target={target}
@@ -394,6 +409,7 @@ function Reel({
           onHud={onHud}
           onReady={onReady}
         />
+        )}
 
         {/* heading */}
         <div className="pointer-events-none absolute left-4 top-[4.5rem] md:left-8">

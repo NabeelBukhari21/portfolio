@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { site } from "@/content/profile";
 
 type Day = { date: string; count: number; level: number };
@@ -36,6 +36,44 @@ function stats(days: Day[]) {
   const best = days.reduce((a, d) => (d.count > a.count ? d : a), days[0] ?? { date: "", count: 0, level: 0 });
   return { longest, current, best };
 }
+
+type View = { weeks: (Day | null)[][]; months: string[] };
+
+/** the 53×7 grid — memoised so the once-a-second "synced Xs ago" tick doesn't re-render 371 cells */
+const Heatmap = memo(function Heatmap({ view, seen, onTip }: { view: View; seen: boolean; onTip: (d: Day) => void }) {
+  return (
+    <div className="w-max">
+      <div className="mb-1 flex gap-[3px] pl-0 font-mono text-[9px] text-dim">
+        {view.months.map((m, i) => (
+          <span key={i} className="w-[11px] overflow-visible whitespace-nowrap">
+            {m}
+          </span>
+        ))}
+      </div>
+      <div className="flex gap-[3px]" style={{ perspective: 600 }}>
+        {view.weeks.map((w, wi) => (
+          <div key={wi} className="flex flex-col gap-[3px]">
+            {Array.from({ length: 7 }, (_, di) => {
+              const d = w[di];
+              return (
+                <span
+                  key={di}
+                  onMouseEnter={() => d && onTip(d)}
+                  className={`block h-[11px] w-[11px] rounded-[2px] ${seen ? "gh-cell" : "opacity-0"}`}
+                  style={{
+                    background: d ? LEVEL[d.level] : "transparent",
+                    boxShadow: d && d.level >= 3 ? `0 0 6px ${LEVEL[d.level]}` : undefined,
+                    animationDelay: `${wi * 18 + di * 6}ms`,
+                  }}
+                />
+              );
+            })}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+});
 
 export function GitHubPulse() {
   const [data, setData] = useState<Payload | null>(null);
@@ -152,36 +190,7 @@ export function GitHubPulse() {
 
               <div ref={scroller} className="mt-5 overflow-x-auto pb-2 [scrollbar-width:thin]" onMouseLeave={() => setTip(null)}>
                 {view ? (
-                  <div className="w-max">
-                    <div className="mb-1 flex gap-[3px] pl-0 font-mono text-[9px] text-dim">
-                      {view.months.map((m, i) => (
-                        <span key={i} className="w-[11px] overflow-visible whitespace-nowrap">
-                          {m}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="flex gap-[3px]" style={{ perspective: 600 }}>
-                      {view.weeks.map((w, wi) => (
-                        <div key={wi} className="flex flex-col gap-[3px]">
-                          {Array.from({ length: 7 }, (_, di) => {
-                            const d = w[di];
-                            return (
-                              <span
-                                key={di}
-                                onMouseEnter={() => d && setTip(d)}
-                                className={`block h-[11px] w-[11px] rounded-[2px] ${seen ? "gh-cell" : "opacity-0"}`}
-                                style={{
-                                  background: d ? LEVEL[d.level] : "transparent",
-                                  boxShadow: d && d.level >= 3 ? `0 0 6px ${LEVEL[d.level]}` : undefined,
-                                  animationDelay: `${wi * 18 + di * 6}ms`,
-                                }}
-                              />
-                            );
-                          })}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  <Heatmap view={view} seen={seen} onTip={setTip} />
                 ) : (
                   <div className="h-[104px] w-full animate-pulse bg-white/[0.03]" />
                 )}
