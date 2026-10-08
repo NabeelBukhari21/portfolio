@@ -669,6 +669,7 @@ export const character = {
       gallery: [
         { src: "/character/locked/fc-campus.webp", caption: "Campus days", vault: "fc-campus.webp" },
         { src: "/character/fc-scratch.webp", caption: "Lab work in Scratch" },
+        { src: "/character/to-class-poster.jpg", caption: "Coding in class", video: "/character/to-class.mp4" },
         { src: "/character/locked/fc-evening.webp", caption: "With friends at an evening event", vault: "fc-evening.webp" },
       ] as Proof[],
     },
@@ -680,7 +681,6 @@ export const character = {
       gallery: [
         { src: "/character/consulate.webp", caption: "With the Consul General of Pakistan in Toronto at a 14 August event" },
         { src: "/character/to-cpp.webp", caption: "C++ lab work at Seneca" },
-        { src: "/character/to-class-poster.jpg", caption: "Coding in class", video: "/character/to-class.mp4" },
         { src: "/character/to-psa.webp", caption: "PSA booth at Seneca Clubs Fest" },
         { src: "/character/to-indus.webp", caption: "Receiving a certificate of achievement at an Indus Development Foundation event" },
         { src: "/character/to-pyvital.webp", caption: "With Pyvital Sports" },
@@ -704,6 +704,7 @@ export const character = {
       image: "/character/graduation.webp",
       gallery: [
         { src: "/character/graduation.webp", caption: "Graduation — Seneca Polytechnic, Toronto, June 2026" },
+        { src: "/character/b-convocation.webp", caption: "Convocation day with the graduating class, Seneca Polytechnic" },
         { src: "/character/locked/b-library.webp", caption: "Toronto Reference Library, July 2026", vault: "b-library.webp" },
         { src: "/character/locked/builder-bus.webp", caption: "On the bus with the group, July 2026", vault: "builder-bus.webp" },
         { src: "/character/locked/b-fields.webp", caption: "Fields from the bus window, July 2026", vault: "b-fields-poster.jpg", vaultVideo: "b-fields.mp4" },
@@ -711,9 +712,13 @@ export const character = {
         { src: "/character/b-elevator.webp", caption: "Grain elevator site visit, July 2026" },
         { src: "/character/b-plant-poster.jpg", caption: "Plant tour, July 2026", video: "/character/b-plant.mp4" },
         { src: "/character/b-group.webp", caption: "Group photo at the grain elevators, July 2026" },
+        { src: "/character/b-mining-expo.webp", caption: "Talking with exhibitors at a mining industry convention, March 2026" },
+        { src: "/character/b-pyvital.webp", caption: "Talking with the Pyvital Sports team" },
         { src: "/character/locked/b-arcade.webp", caption: "Retro arcade booth, August 2026", vault: "b-arcade.webp" },
         { src: "/character/locked/builder-community-event.webp", caption: "Community event, August 2026", vault: "builder-community-event.webp" },
         { src: "/character/locked/builder-night-out.webp", caption: "Night out, August 2026", vault: "builder-night-out.webp" },
+        { src: "/character/locked/b-event-selfie.webp", caption: "Event day", vault: "b-event-selfie.webp" },
+        { src: "/character/locked/b-polar-dip.webp", caption: "New Year's Day polar bear dip, January 2026", vault: "b-polar-dip.webp" },
       ] as Proof[],
     },
   ],
