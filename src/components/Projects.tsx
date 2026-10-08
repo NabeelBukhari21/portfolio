@@ -1,5 +1,7 @@
 "use client";
 
+import { useNear } from "@/lib/useNear";
+import { sm } from "@/lib/img";
 import { AnimatePresence, motion } from "motion/react";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
@@ -215,7 +217,7 @@ function useShots(p: Project) {
       const img = new Image();
       img.onload = () => ((shotOk[g.src] = true), bump((v) => v + 1));
       img.onerror = () => ((shotOk[g.src] = false), bump((v) => v + 1));
-      img.src = g.src;
+      img.src = sm(g.src); // probing with the small copy — no full-size decode for every screenshot
     }
   }, [p]);
   // original gallery indexes of the screenshots that exist
@@ -384,14 +386,7 @@ function Reel({
   const onReady = useCallback((ok: boolean) => !ok && onUnsupported(), [onUnsupported]);
   const canHover = useSyncExternalStore(noop, () => matchMedia("(hover: hover)").matches, () => true);
   // don't spin up the 3D reel until it's within a couple of screens
-  const [near, setNear] = useState(false);
-  useEffect(() => {
-    const el = sec.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([e]) => e.isIntersecting && (setNear(true), io.disconnect()), { rootMargin: "200% 0px" });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+  const near = useNear(sec, "150%", "300%");
   const hasShots = shots.length > 0;
   const thumbs = shots.slice(0, 6);
 
@@ -569,7 +564,7 @@ function Reel({
                       className={`group relative aspect-video flex-1 overflow-hidden border transition ${on ? "border-cyan" : "border-line opacity-60 hover:opacity-100"}`}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={p.gallery[g].src} alt="" loading="lazy" className="h-full w-full object-cover object-top" />
+                      <img src={sm(p.gallery[g].src)} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover object-top" />
                       <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white/10">
                         {on && (
                           <span
@@ -725,7 +720,7 @@ function CaseFile({ p, onClose, onGallery }: { p?: Project; onClose: () => void;
                           onClick={() => onGallery(p.slug, k)}
                           className="group relative aspect-video overflow-hidden border border-white/10 transition hover:border-cyan"
                         >
-                          <Photo src={g.src} alt={g.caption || `${p.name} screenshot ${k + 1}`} className="h-full w-full object-top transition duration-500 group-hover:scale-105" />
+                          <Photo src={sm(g.src)} alt={g.caption || `${p.name} screenshot ${k + 1}`} className="h-full w-full object-top transition duration-500 group-hover:scale-105" />
                           <span className="absolute inset-0 flex items-center justify-center bg-void/0 font-mono text-[11px] text-transparent transition group-hover:bg-void/40 group-hover:text-cyan">
                             ⤢ view
                           </span>

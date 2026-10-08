@@ -1,5 +1,6 @@
 "use client";
 
+import { sm } from "@/lib/img";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
 import type { Shot } from "@/content/profile";
@@ -106,7 +107,7 @@ export function Lightbox({
                 className={`h-12 w-20 shrink-0 overflow-hidden border transition ${n === i ? "border-cyan" : "border-line opacity-50 hover:opacity-100"}`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={s.src} alt="" className="h-full w-full object-cover object-top" />
+                <img src={sm(s.src)} alt="" decoding="async" className="h-full w-full object-cover object-top" />
               </button>
             ))}
           </div>
@@ -127,7 +128,7 @@ export function GalleryPreview({ shots, title, onOpen }: { shots: Shot[]; title:
   return (
     <div>
       <button onClick={() => onOpen(hover)} className="group/cover relative block w-full overflow-hidden" aria-label={`Open ${title} screenshots`}>
-        <Photo src={cover.src} alt={cover.caption || `${title} screenshot`} className="aspect-video w-full object-top transition duration-500 group-hover/cover:scale-[1.02]" />
+        <Photo src={sm(cover.src)} alt={cover.caption || `${title} screenshot`} className="aspect-video w-full object-top transition duration-500 group-hover/cover:scale-[1.02]" />
         {shots.length > 1 && (
           <span className="absolute right-2 bottom-2 bg-void/85 px-2 py-1 font-mono text-[11px] text-cyan opacity-90 group-hover/cover:opacity-100">
             ⤢ {shots.length} screenshots
@@ -146,7 +147,7 @@ export function GalleryPreview({ shots, title, onOpen }: { shots: Shot[]; title:
               className={`h-10 flex-1 overflow-hidden border transition ${n === hover ? "border-cyan" : "border-transparent opacity-60 hover:opacity-100"}`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={s.src} alt="" loading="lazy" className="h-full w-full object-cover object-top" />
+              <img src={sm(s.src)} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover object-top" />
             </button>
           ))}
           {more > 0 && (

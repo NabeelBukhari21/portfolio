@@ -1,5 +1,6 @@
 "use client";
 
+import { useNear } from "@/lib/useNear";
 import dynamic from "next/dynamic";
 import { AnimatePresence, animate, motion, useMotionValue, useTransform } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
@@ -350,14 +351,7 @@ export function ArchitectureMap() {
 
   const shown = hovered && hovered.id !== selected ? hovered : null;
   // mount the 3D scene only once the section is within a screen of the viewport
-  const [near, setNear] = useState(false);
-  useEffect(() => {
-    const el = sec.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([e]) => e.isIntersecting && (setNear(true), io.disconnect()), { rootMargin: "100% 0px" });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+  const near = useNear(sec, "100%", "300%");
 
   return (
     <section id="map" ref={sec} className="relative lg:h-[230svh]">

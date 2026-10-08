@@ -1,5 +1,6 @@
 "use client";
 
+import { sm } from "@/lib/img";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { faceVisible, headTurn } from "@/lib/neural/engine";
@@ -313,7 +314,7 @@ export function ProjectStage({ items, target, shot, onPick, onOpen, onHover, onH
       const c = cards[i];
       if (!c || k < 0 || k >= items[i].images.length || c.tex[k] || c.loading[k]) return;
       c.loading[k] = true;
-      loadImage(items[i].images[k], maxW)
+      loadImage(small ? sm(items[i].images[k]) : items[i].images[k], maxW) // phones: the 640px copy is plenty for a 720px texture
         .then((cv) => {
           if (!disposed) c.tex[k] = toTex(cv);
         })

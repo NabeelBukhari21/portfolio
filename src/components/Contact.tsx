@@ -86,7 +86,7 @@ export function Contact() {
             </div>
             <div className="mt-8 flex items-center gap-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/character/me-park.webp" alt={site.name} className="h-20 w-20 rounded-full border-2 border-[#0A66C2] object-cover object-[50%_30%] shadow-[0_0_24px_-4px_#0A66C2]" />
+              <img src="/character/me-park.sm.webp" alt={site.name} className="h-20 w-20 rounded-full border-2 border-[#0A66C2] object-cover object-[50%_30%] shadow-[0_0_24px_-4px_#0A66C2]" />
               <div className="min-w-0">
                 <div className="font-display text-2xl font-bold leading-tight md:text-3xl">{site.name}</div>
                 <div className="text-cyan">{site.headline}</div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { sm } from "@/lib/img";
 import { AnimatePresence, motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from "motion/react";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent as RPointerEvent, type ReactNode } from "react";
 import { character, experience, projects, site, skills, type Proof } from "@/content/profile";
@@ -666,7 +667,7 @@ export function CharacterSelect() {
                                   style={{ clipPath: cut(10) }}
                                 >
                                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                                  <img src={k.src} alt="" loading="lazy" style={{ objectPosition: k.pos }} className="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
+                                  <img src={sm(k.src)} alt="" loading="lazy" decoding="async" style={{ objectPosition: k.pos }} className="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
                                 </button>
                               ))}
                             </div>
@@ -745,12 +746,12 @@ export function CharacterSelect() {
             <AnimatePresence>
               {a.image && (
                 <motion.div key={a.image} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0">
-                  <motion.img src={a.image} alt="" style={{ y: bgY, scale: bgS }} className="h-full w-full object-cover opacity-30 blur-[3px] grayscale" />
+                  <motion.img src={sm(a.image)} alt="" style={{ y: bgY, scale: bgS }} className="h-full w-full object-cover opacity-25" />
                 </motion.div>
               )}
             </AnimatePresence>
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(6,5,12,0.97)_0%,rgba(6,5,12,0.75)_45%,rgba(6,5,12,0.55)_100%),linear-gradient(to_bottom,rgba(6,5,12,1),transparent_18%,transparent_82%,rgba(6,5,12,1))]" />
-            <div className="absolute inset-0 mix-blend-color bg-[#ff3b5c]/25" />
+            <div className="absolute inset-0 bg-[#ff3b5c]/10" />
             <motion.div style={{ x: epX }} className="absolute -bottom-[4vw] left-0 whitespace-nowrap font-display text-[clamp(8rem,30vw,30rem)] font-bold leading-none text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.08)]">
               EP.0{arc + 1}
             </motion.div>
@@ -842,7 +843,7 @@ export function CharacterSelect() {
                       <Chamfer n={28} className="h-full" edge={o === 0 ? `linear-gradient(135deg, ${RED}, rgba(0,240,255,0.7))` : "rgba(255,255,255,0.15)"} fill="#0a0718">
                         {x.image ? (
                           // eslint-disable-next-line @next/next/no-img-element
-                          <img src={x.image} alt={x.name} className="h-full w-full object-cover" />
+                          <img src={o === 0 ? x.image : sm(x.image)} alt={x.name} decoding="async" className="h-full w-full object-cover" />
                         ) : (
                           <div className="grid-bg flex h-full w-full items-center justify-center font-mono text-xs text-dim">EP.0{i + 1} · photos coming soon</div>
                         )}
@@ -881,7 +882,7 @@ export function CharacterSelect() {
                       className={`group relative h-28 w-40 shrink-0 overflow-hidden border md:h-36 md:w-52 ${g.locked ? "border-[#ff3b5c]/50" : "border-white/10"}`}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={g.src} alt={g.locked ? "" : g.caption} loading="lazy" className={`h-full w-full object-cover transition duration-500 ${g.locked ? "scale-110 blur-md" : "grayscale-[40%] group-hover:scale-110 group-hover:grayscale-0"}`} />
+                      <img src={sm(g.src)} alt={g.locked ? "" : g.caption} loading="lazy" decoding="async" className={`h-full w-full object-cover transition duration-500 ${g.locked ? "scale-110 blur-md" : "grayscale-[40%] group-hover:scale-110 group-hover:grayscale-0"}`} />
                       {g.locked ? (
                         <span className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-[#06050c]/45 font-mono text-[9px] tracking-[0.25em] text-[#ff3b5c]">
                           <span className="text-xl">🔒</span>
@@ -931,7 +932,7 @@ export function CharacterSelect() {
                         <HoloCard onClick={() => open(x.title, proof)} label={`${x.title} — view proof`} edge={k % 3 === 0 ? `linear-gradient(135deg, ${RED}, rgba(255,255,255,0.1) 50%, #00f0ff)` : "rgba(255,255,255,0.14)"}>
                           <div className={`relative overflow-hidden ${k % 3 === 0 ? "aspect-[3/4]" : "aspect-[4/3]"}`}>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={proof[0].src} alt="" loading="lazy" className="h-full w-full object-cover opacity-85 transition duration-700 group-hover:scale-110 group-hover:opacity-100" />
+                            <img src={sm(proof[0].src)} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover opacity-85 transition duration-700 group-hover:scale-110 group-hover:opacity-100" />
                             <div className="absolute inset-0 bg-gradient-to-t from-[#0a0718] via-[#0a0718]/20 to-transparent" />
                             <span className="absolute right-3 top-3 bg-void/80 px-2 py-0.5 font-mono text-[10px] text-volt">
                               {proof.some((pp) => pp.video) ? "▶ " : "▣ "}
@@ -1034,7 +1035,7 @@ export function CharacterSelect() {
                             <video src={t.video} poster={t.src} autoPlay loop muted playsInline preload="none" className="h-full w-full object-cover" />
                           ) : (
                             // eslint-disable-next-line @next/next/no-img-element
-                            <img src={t.src} alt={t.caption} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
+                            <img src={sm(t.src)} alt={t.caption} loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
                           )}
                           {k >= character.training.length && <span className="absolute left-1.5 top-1.5 bg-void/70 px-1.5 font-mono text-[9px] text-ok">DECRYPTED</span>}
                         </motion.button>

@@ -1,5 +1,6 @@
 "use client";
 
+import { sm } from "@/lib/img";
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { useRef, useState, type PointerEvent as RPointerEvent } from "react";
 import { ventures } from "@/content/profile";
@@ -115,7 +116,7 @@ function Venture({ v, vi, onOpen }: { v: (typeof ventures)[number]; vi: number; 
                   <div className="h-full w-full p-px" style={{ clipPath: cut(12), background: "rgba(242,255,60,0.5)" }}>
                     <div className="h-full w-full overflow-hidden bg-[#0a0718]" style={{ clipPath: cut(12) }}>
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={g.src} alt="" loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
+                      <img src={sm(g.src)} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
                     </div>
                   </div>
                 </motion.button>

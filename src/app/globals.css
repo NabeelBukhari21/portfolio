@@ -364,7 +364,6 @@ aside.glass {
     linear-gradient(90deg, rgba(0, 240, 255, 0.22) 1px, transparent 1px);
   background-size: 70px 70px;
   animation: floor-move 3.5s linear infinite;
-  will-change: transform;
 }
 .vt-floor::before {
   inset: -80px 0 0 0;
