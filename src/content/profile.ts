@@ -443,8 +443,8 @@ export const projects: Project[] = [
   {
     slug: "robotics",
     name: "Autonomous Robot Navigation",
-    tagline: "Sensor-driven autonomy for a VEX robot in RobotC, tested in Robot Virtual Worlds",
-    period: "", // TODO: add course + term
+    tagline: "Sensor-driven autonomy for a VEX robot in RobotC, tested in Robot Virtual Worlds — SDR 520, Software Design for Robotics Applications (A+)",
+    period: "Sep 2025 – Dec 2025",
     status: "academic",
     kind: "app",
     stack: ["RobotC", "C", "VEX", "Robot Virtual Worlds", "Sonar", "Gyroscope"],
