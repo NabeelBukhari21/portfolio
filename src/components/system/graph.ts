@@ -94,6 +94,7 @@ const SUB: Record<string, string> = {
   "ai-support-agent": "ai inference",
   maxdal: "shopify storefront",
   robotics: "robotc · sensors",
+  "self-driving": "cnn · simulator",
   hotel: "java · javafx",
   legoland: "postgres + mongo",
 };

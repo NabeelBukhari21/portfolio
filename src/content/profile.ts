@@ -475,6 +475,38 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "self-driving",
+    name: "Self-Driving Car CNN",
+    tagline: "End-to-end deep learning that steers a simulated car from camera images — CVI620, Computer Vision (team project)",
+    period: "Apr 2026",
+    status: "academic",
+    kind: "ai",
+    stack: ["Python", "TensorFlow / Keras", "OpenCV", "NumPy", "Flask-SocketIO", "Udacity Simulator"],
+    bullets: [
+      "Team project with the work split equally: a CNN based on Nvidia's end-to-end self-driving architecture that predicts a steering angle straight from each front-camera frame.",
+      "Collected about 15,800 driving samples in the Udacity simulator, then fixed a heavy bias toward driving straight by undersampling each steering bin to a cap of 400.",
+      "Augmented training images with flips (negating the angle), brightness, zoom and panning; preprocessing crops the sky and hood, converts to YUV, blurs and resizes to 200×66.",
+      "Trained for 30 epochs with Adam, dropout and early stopping to a validation loss of 0.107; a Flask-SocketIO server streams frames from the simulator, runs the model and sends back steering and throttle in real time.",
+      "My commits restructured the code into a src/ package (preprocessing, augmentation, training) and added typing and documentation.",
+    ],
+    metrics: [
+      { value: "~15.8K", label: "driving samples" },
+      { value: "0.107", label: "validation loss (MSE)" },
+      { value: "30", label: "training epochs" },
+      { value: "5", label: "conv layers" },
+    ],
+    challenges: [
+      { problem: "Most samples were straight driving, so the model learned to barely turn.", fix: "Histogram-based undersampling capped every steering bin at 400 samples." },
+      { problem: "The simulator only worked with specific socket library versions.", fix: "Pinned flask-socketio, python-socketio and eventlet to compatible versions." },
+    ],
+    links: { github: "https://github.com/akilpatrick47/self-driving-car-cvi620" },
+    gallery: [
+      { src: "/projects/selfdriving/01-simulator.webp", caption: "The Udacity self-driving car simulator the model was trained and tested in (illustrative screenshot)" },
+      { src: "/projects/selfdriving/02-steering-distribution.webp", caption: "Steering angles before and after balancing: the huge straight-driving spike is capped" },
+      { src: "/projects/selfdriving/03-training-loss.webp", caption: "Training vs validation loss over 30 epochs, ending at 0.107" },
+    ],
+  },
+  {
     slug: "hotel",
     name: "Hotel Management System",
     tagline: "Self-service guest kiosk + staff dashboard in JavaFX",
