@@ -85,6 +85,7 @@ function uses(stack: string[], skill: string) {
 const SUB: Record<string, string> = {
   rentos: "ios · ai copilot",
   insightboard: "llm + vision",
+  "agent-village": "agents · claude code",
   xeveora: "aws ecs cluster",
   "grizzly-ecom": "magento · ops",
   handouts: "hackathon · bigquery",
